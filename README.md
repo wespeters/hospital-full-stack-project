@@ -22,23 +22,23 @@ As a user I want to:
 ## Front-End Wireframes
 
 #### Home/Login Page
-![Home/Login](image.png)
+![Home/Login](images/image.png)
 
 #### Patient Login Page
-![Patient Login](image-1.png)
+![Patient Login](images/image-1.png)
 
 #### Patient Home Page
-![Patient Home](image-2.png)
+![Patient Home](images/image-2.png)
 
 #### Doctor Home Page
-![Doctor Home](image-3.png)
+![Doctor Home](images/image-3.png)
 
 #### Admin Home Page
-![Admin Home](image-4.png)
+![Admin Home](images/image-4.png)
 
 ## Back-End Database Diagram
 
-![DB diagram](image-5.png)
+![DB diagram](images/image-5.png)
 
 ## License
 
