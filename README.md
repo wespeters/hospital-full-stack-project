@@ -21,19 +21,19 @@ As a user I want to:
 
 ## Front-End Wireframes
 
-- Home/Login Page
+#### Home/Login Page
 ![Home/Login](image.png)
 
-- Patient Login Page
+#### Patient Login Page
 ![Patient Login](image-1.png)
 
-- Patient Home Page
+#### Patient Home Page
 ![Patient Home](image-2.png)
 
-- Doctor Home Page
+#### Doctor Home Page
 ![Doctor Home](image-3.png)
 
-- Admin Home Page
+#### Admin Home Page
 ![Admin Home](image-4.png)
 
 ## Back-End Database Diagram
