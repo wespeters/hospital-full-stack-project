@@ -42,7 +42,7 @@ class Doctors(Resource):
         db.session.commit()
         return make_response(jsonify(new_doctor.to_dict()), 201)
 
-    def put(self, id):
+    def patch(self, id):
         doctor = Doctor.query.filter_by(id=id).one_or_none()
         if doctor is None:
             return make_response(jsonify({'error': 'Doctor not found'}), 404)
@@ -80,7 +80,7 @@ class Patients(Resource):
         db.session.commit()
         return make_response(jsonify(new_patient.to_dict()), 201)
 
-    def put(self, id):
+    def patch(self, id):
         patient = Patient.query.filter_by(id=id).one_or_none()
         if patient is None:
             return make_response(jsonify({'error': 'Patient not found'}), 404)
@@ -118,7 +118,7 @@ class Appointments(Resource):
         db.session.commit()
         return make_response(jsonify(new_appointment.to_dict()), 201)
 
-    def put(self, id):
+    def patch(self, id):
         appointment = Appointment.query.filter_by(id=id).one_or_none()
         if appointment is None:
             return make_response(jsonify({'error': 'Appointment not found'}), 404)
