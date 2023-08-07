@@ -69,7 +69,7 @@ class Appointment(db.Model, SerializerMixin):
                     if char != value[2]:
                         if bool(char.isdigit()) == False:
                             raise ValueError('Time must use the format \'hh:mm\'.')
-                        
+
             if int(value[0]) > 2 or (int(value[0]) == 2 and int(value[1]) > 3):
                 raise ValueError('Hour must not be greater than 23.')
             elif int(value[3]) > 5:

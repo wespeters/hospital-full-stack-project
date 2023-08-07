@@ -138,21 +138,46 @@ class Appointments(Resource):
             return make_response(jsonify({'result': 'Appointment deleted'}), 200)
 
 
-class Login(Resource):
-    def post(self):
-        username = request.json.get('username')
-        password = request.json.get('password')
-        login = Login.query.filter_by(username=username, password=password).one_or_none()
-        if login is None:
-            return make_response(jsonify({'error': 'Invalid username or password'}), 401)
+class Logins(Resource):
+    def get(self, id = None):
+        if id:
+            login = Login.query.filter_by(id = id).first().to_dict()
+            return make_response(login, 200)
         else:
-            return make_response(jsonify({'message': 'Logged in successfully'}), 200)
+            logins = [login.to_dict() for login in Login.query.all()]
+            return make_response(logins, 200)
+
+    def post(self):
+        new_login = Login(**request.json)
+        db.session.add(new_login)
+        db.session.commit()
+        return make_response(new_login.to_dict(), 201)
+
+    def delete(self, id):
+        login = Login.query.filter_by(id = id).first()
+        db.session.delete(login)
+        db.session.commit()
+        return make_response({'message': 'Login successfully deleted'}, 200)
+    
+    def patch(self, id):
+        login = Login.query.filter_by(id = id).first()
+
+        if login:
+            for key, value in request.json.items():
+                setattr(login, key, value)
+            
+            db.session.add(login)
+            db.session.commit()
+            
+            return make_response({"message": "Login Successfully Updated!"}, 200)
+        else:
+            return make_response({"message": "Error, Login was not found"}, 404)
 
 
 api.add_resource(Doctors, '/doctors', '/doctors/<int:id>')
 api.add_resource(Patients, '/patients', '/patients/<int:id>')
 api.add_resource(Appointments, '/appointments', '/appointments/<int:id>')
-api.add_resource(Login, '/login')
+api.add_resource(Logins, '/logins', '/logins/<int:id>')
 
 
 if __name__ == '__main__':
