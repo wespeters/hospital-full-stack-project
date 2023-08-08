@@ -186,6 +186,7 @@ class PatientLogins(Resource):
         else:
             return make_response(jsonify({'success': 'Login successful'}), 200)
 
+
 api.add_resource(Doctors, '/doctors', '/doctors/<int:id>')
 api.add_resource(Patients, '/patients', '/patients/<int:id>')
 api.add_resource(Appointments, '/appointments', '/appointments/<int:id>')
@@ -194,4 +195,4 @@ api.add_resource(PatientLogins, '/patientlogin')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5555, debug=True)

@@ -1,30 +1,31 @@
-import React, { useState } from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
 const PatientLogin = () => {
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [dob, setDob] = useState('');
+    const [patients, setPatients] = useState([]);
+    const [patient, setPatient] = useState({});
     const [errorMsg, setErrorMsg] = useState(null);
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        axios.post('/patientlogin', {
-            firstname: firstname,
-            lastname: lastname,
-            dob: dob
-        })
-        .then(response => {
-            console.log(response);
-            navigate('/appointments');
-        })
-        .catch(error => {
-            console.log(error);
-            setErrorMsg('Login unsuccessful');
-        });
-    };
+    useEffect(() => fetch('/patients')
+        .then(resp => resp.json())
+        .then(setPatients), [])
+
+    function onChange(e){
+        setPatient({...patient, [e.target.name]: e.target.value})
+    }
+
+    function handleSubmit (e){
+        e.preventDefault()
+
+        for (let i = 0; i < patients.length; i++){
+            if ((patients[i].dob === patient.dob) && (patients[i].firstname === patient.firstname) && (patients[i].lastname === patient.lastname)) {
+                navigate('/appointments')
+            }
+        }
+
+        setErrorMsg('Login unsuccessful')
+    }
 
     return (
         <div>
@@ -33,24 +34,24 @@ const PatientLogin = () => {
                 <input
                     type="text"
                     name="firstname"
-                    value={firstname}
-                    onChange={e => setFirstname(e.target.value)}
+                    value={patient.firstname}
+                    onChange={onChange}
                     placeholder="First name"
                     required
                 />
                 <input
                     type="text"
                     name="lastname"
-                    value={lastname}
-                    onChange={e => setLastname(e.target.value)}
+                    value={patient.lastname}
+                    onChange={onChange}
                     placeholder="Last name"
                     required
                 />
                 <input
-                    type="date"
+                    type="text"
                     name="dob"
-                    value={dob}
-                    onChange={e => setDob(e.target.value)}
+                    value={patient.dob}
+                    onChange={onChange}
                     required
                 />
                 <input type="submit" value="Login" />
