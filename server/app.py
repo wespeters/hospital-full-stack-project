@@ -173,11 +173,24 @@ class Logins(Resource):
         else:
             return make_response({"message": "Error, Login was not found"}, 404)
 
+class PatientLogins(Resource):
+    def post(self):
+        firstname = request.json.get('firstname')
+        lastname = request.json.get('lastname')
+        dob = request.json.get('dob')
+
+        patient = Patient.query.filter_by(firstname=firstname, lastname=lastname, dob=dob).one_or_none()
+
+        if patient is None:
+            return make_response(jsonify({'error': 'Invalid login credentials'}), 401)
+        else:
+            return make_response(jsonify({'success': 'Login successful'}), 200)
 
 api.add_resource(Doctors, '/doctors', '/doctors/<int:id>')
 api.add_resource(Patients, '/patients', '/patients/<int:id>')
 api.add_resource(Appointments, '/appointments', '/appointments/<int:id>')
 api.add_resource(Logins, '/logins', '/logins/<int:id>')
+api.add_resource(PatientLogins, '/patientlogin')
 
 
 if __name__ == '__main__':
