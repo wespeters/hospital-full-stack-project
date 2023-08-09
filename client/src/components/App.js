@@ -1,11 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import PatientLogin from "./PatientLogin";
+import DoctorLogin from "./DoctorLogin";
 
 function App() {
   return (
     <Routes>
-      <Route exact path="/" element = {<h1>Phase 4 Project Client</h1>} />
+      <Route exact path="/" element = {<DoctorLogin />} />
       <Route path="/patientlogin" element={<PatientLogin />} />
     </Routes>
   );
