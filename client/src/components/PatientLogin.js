@@ -20,7 +20,7 @@ const PatientLogin = () => {
 
         for (let i = 0; i < patients.length; i++){
             if ((patients[i].dob === patient.dob) && (patients[i].firstname === patient.firstname) && (patients[i].lastname === patient.lastname)) {
-                navigate('/appointments')
+                navigate('/patienthome')
             }
         }
 
