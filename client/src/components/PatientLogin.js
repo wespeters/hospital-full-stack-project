@@ -24,13 +24,13 @@ const PatientLogin = () => {
 
         for (let i = 0; i < patients.length; i++){
             if ((patients[i].dob === patient.dob) && (patients[i].firstname === patient.firstname) && (patients[i].lastname === patient.lastname)) {
-                navigate('/patienthome')
+                flag=1
             }
         }
 
         if (flag === 1){
             setLoginMsg('Logged in!')
-            //navigate('/appointments')
+            navigate('/patient-home')
         } else {
             setErrorMsg('Login unsuccessful')
         }

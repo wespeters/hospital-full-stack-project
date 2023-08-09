@@ -191,7 +191,7 @@ api.add_resource(Doctors, '/doctors', '/doctors/<int:id>')
 api.add_resource(Patients, '/patients', '/patients/<int:id>')
 api.add_resource(Appointments, '/appointments', '/appointments/<int:id>')
 api.add_resource(Logins, '/logins', '/logins/<int:id>')
-api.add_resource(PatientLogins, '/patientlogin')
+api.add_resource(PatientLogins, '/patient-login')
 
 
 if __name__ == '__main__':
