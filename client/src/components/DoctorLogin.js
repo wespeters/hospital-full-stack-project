@@ -5,7 +5,6 @@ function DoctorLogin (){
     const [user, setUser] = useState({});
     const [logins, setLogins] = useState([]);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [loginMsg, setLoginMsg] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,22 +31,18 @@ function DoctorLogin (){
 
         if (flag === 1){
             if(loginInfo.user_type === 'Doctor'){
-                setLoginMsg(`Logged in! Welcome ${loginInfo.user}`)
-                setErrorMsg(null)
+                navigate('/doctor-home')
             } else {
-                setLoginMsg('Logged in!')
-                setErrorMsg(null)
+                navigate('/admin-home')
             }
         } else {
             setErrorMsg('Login Unsuccessful!')
-            setLoginMsg(null)
         }
     }
 
     return (
         <div>
             {errorMsg && <div>{errorMsg}</div>}
-            {loginMsg && <div>{loginMsg}</div>}
             <form onSubmit={handleSubmit}>
                 <input
                     type = "text"
@@ -69,7 +64,7 @@ function DoctorLogin (){
             </form>
             <br/>
             <label>Not a Doctor or Admin?</label>
-            <button id="patient-login" onClick={() => navigate('/patientlogin')}>Patient</button>
+            <button id="patient-login" onClick={() => navigate('/patient-login')}>Patient</button>
         </div>
     )
 }
