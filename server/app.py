@@ -118,8 +118,10 @@ class Appointments(Resource):
 
     def post(self):
         new_appointment = Appointment(**request.json)
+        print("New appointment:", new_appointment)
         db.session.add(new_appointment)
         db.session.commit()
+        print("Saved appointment:", new_appointment)
         return make_response(jsonify(new_appointment.to_dict()), 201)
 
     def patch(self, id):

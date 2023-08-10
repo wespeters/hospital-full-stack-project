@@ -8,7 +8,8 @@ const PatientHome = () => {
   const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [newAppointment, setNewAppointment] = useState({ doctor_id: "", date: "" });
-  const [changeDate, setChangeDate] = useState(""); // Added state for change date
+  const [changeDate, setChangeDate] = useState("");
+  const [changeTime, setChangeTime] = useState("");
 
   const fetchAppointments = () => {
     fetch(`/appointments?patientId=${patientId}`) 
@@ -54,7 +55,7 @@ const PatientHome = () => {
     fetch(`/appointments/${appointmentId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ date: convertedDate }),
+      body: JSON.stringify({ date: convertedDate, time: changeTime }),
     })
       .then(() => fetchAppointments());
   };
@@ -67,7 +68,7 @@ const PatientHome = () => {
     fetch("/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...newAppointment, date: convertedDate }),
+      body: JSON.stringify({ ...newAppointment, date: convertedDate, time: newAppointment.time }),
     })
       .then(() => fetchAppointments());
   };  
@@ -85,23 +86,25 @@ const PatientHome = () => {
         <p>Change an Appointment: <button onClick={handleChange}>Change</button></p>
         <p>Make An Appointment: <button onClick={handleCreate}>Create</button></p>
       </div>
-      {action === "view" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>)}</div>}
-      {action === "cancel" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"} <button onClick={() => handleCancelAppointment(appointment.id)}>Cancel</button></p>)}</div>}
+      {action === "view" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} {appointment.time} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>)}</div>}
+      {action === "cancel" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} {appointment.time} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"} <button onClick={() => handleCancelAppointment(appointment.id)}>Cancel</button></p>)}</div>}
       {action === "change" && <div>
         {appointments.map((appointment) => (
           <div key={appointment.id}>
-            <p>{appointment.date} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>
+            <p>{appointment.date} {appointment.time} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>
             <input type="date" value={changeDate} onChange={(e) => setChangeDate(e.target.value)} />
+            <input type="time" value={changeTime} onChange={(e) => setChangeTime(e.target.value)} />
             <button onClick={() => handleChangeAppointment(appointment.id)}>Change</button>
           </div>
         ))}
       </div>}
       {action === "create" && <div>
-      <label>Select Doctor: </label>
+        <label>Select Doctor: </label>
         <select name="doctor_id" onChange={handleNewAppointmentChange}>
           {doctors.map((doctor) => <option key={doctor.id} value={doctor.id}>{doctor.lastname}</option>)}
         </select>
         <input type="date" name="date" onChange={handleNewAppointmentChange} />
+        <input type="time" name="time" onChange={handleNewAppointmentChange} /> {/* Added input for time */}
         <button onClick={handleCreateAppointment}>Submit</button>
       </div>}
     </div>

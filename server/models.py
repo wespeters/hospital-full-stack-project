@@ -77,6 +77,7 @@ class Appointment(db.Model, SerializerMixin):
 
         return value
 
+    
     def __repr__(self):
         return f'<Appointment Doctor ID: {self.doctor_id}, Patient ID: {self.patient_id}>'
     

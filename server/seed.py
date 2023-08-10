@@ -3,6 +3,7 @@
 # Standard library imports
 from random import randint, choice as rc
 import datetime
+from datetime import time as time_obj
 
 # Remote library imports
 from faker import Faker
@@ -34,7 +35,10 @@ def create_appointments(doctors, patients):
         for _ in range(randint(1, 10)):  # Each doctor will have between 1 to 10 appointments.
             patient = rc(patients)
             date = fake.date_between(start_date='-1y', end_date='+1y').strftime('%m/%d/%Y')
-            time = str(datetime.time(hour=randint(0, 23), minute=randint(0, 59)))[:5]
+            hour = randint(9, 16) # 9 AM to 4 PM
+            minute = randint(0, 59)
+            am_pm = 'AM' if hour < 12 else 'PM'
+            time = time_obj(hour=hour % 12 if hour != 12 else 12, minute=minute).strftime('%I:%M ' + am_pm)
             appointment = Appointment(date=date, time=time, doctor_id=doctor.id, patient_id=patient.id)
             appointments.append(appointment)
     return appointments
