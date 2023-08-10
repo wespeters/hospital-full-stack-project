@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
+import { formatTime } from '../helpers.js';
 
 const PatientHome = () => {
   const location = useLocation();
@@ -11,11 +12,20 @@ const PatientHome = () => {
   const [newAppointment, setNewAppointment] = useState({ doctor_id: "", date: "" });
   const [changeDate, setChangeDate] = useState("");
   const [changeTime, setChangeTime] = useState("");
+  const today = new Date().toISOString().split('T')[0];
+  
+  const filterAppointments = (appointments) => {
+    return appointments.filter(appointment => {
+      const appointmentDate = new Date(appointment.date);
+      const todayDate = new Date(today);
+      return appointmentDate >= todayDate;
+    });
+  };
 
   const fetchAppointments = () => {
-    fetch(`/appointments?patientId=${patientId}`) 
+    fetch(`/appointments?patientId=${patientId}`)
       .then((resp) => resp.json())
-      .then(setAppointments);
+      .then((data) => setAppointments(filterAppointments(data)));
   };
 
   const fetchDoctors = () => {
@@ -84,17 +94,17 @@ const PatientHome = () => {
       <DarkModeToggle />
       <h1>Patient Home Page</h1>
       <div>
-        <p>View Upcoming Appointments: <button onClick={handleView}>View</button></p>
+        <p>View All Appointments: <button onClick={handleView}>View</button></p>
         <p>Cancel an Appointment: <button onClick={handleCancel}>Cancel</button></p>
         <p>Change an Appointment: <button onClick={handleChange}>Change</button></p>
         <p>Make An Appointment: <button onClick={handleCreate}>Create</button></p>
       </div>
-      {action === "view" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} {appointment.time} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>)}</div>}
-      {action === "cancel" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} {appointment.time} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"} <button onClick={() => handleCancelAppointment(appointment.id)}>Cancel</button></p>)}</div>}
+      {action === "view" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} {formatTime(appointment.time)} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>)}</div>}
+      {action === "cancel" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} {formatTime(appointment.time)} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"} <button onClick={() => handleCancelAppointment(appointment.id)}>Cancel</button></p>)}</div>}
       {action === "change" && <div>
         {appointments.map((appointment) => (
           <div key={appointment.id}>
-            <p>{appointment.date} {appointment.time} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>
+            <p>{appointment.date} {formatTime(appointment.time)} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>
             <input type="date" value={changeDate} onChange={(e) => setChangeDate(e.target.value)} />
             <input type="time" value={changeTime} onChange={(e) => setChangeTime(e.target.value)} />
             <button onClick={() => handleChangeAppointment(appointment.id)}>Change</button>
@@ -107,7 +117,7 @@ const PatientHome = () => {
     <option value="">Select Doctor</option>
     {doctors.map((doctor) => <option key={doctor.id} value={doctor.id}>{doctor.lastname}</option>)}
   </select>
-  <input type="date" name="date" onChange={handleNewAppointmentChange} />
+  <input type="date" name="date" onChange={handleNewAppointmentChange} min={today} />
   <input type="time" name="time" onChange={handleNewAppointmentChange} />
   <button onClick={handleCreateAppointment}>Submit</button>
 </div>}

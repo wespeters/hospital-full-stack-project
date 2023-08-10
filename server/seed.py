@@ -31,10 +31,11 @@ def create_patients(num):
 
 def create_appointments(doctors, patients):
     appointments = []
+    today_date = datetime.datetime.today().date()
     for doctor in doctors:
         for _ in range(randint(1, 10)):  # Each doctor will have between 1 to 10 appointments.
             patient = rc(patients)
-            date = fake.date_between(start_date='-1y', end_date='+1y').strftime('%m/%d/%Y')
+            date = fake.date_between(start_date=today_date, end_date='+1y').strftime('%m/%d/%Y')
             hour = randint(9, 16) # 9 AM to 4 PM
             minute = randint(0, 59)
             hour_str = f'{hour:02}'
@@ -45,6 +46,7 @@ def create_appointments(doctors, patients):
             appointment = Appointment(date=date, time=time, doctor_id=doctor.id, patient_id=patient.id)
             appointments.append(appointment)
     return appointments
+
 
 def create_logins(doctors):
     logins = []
