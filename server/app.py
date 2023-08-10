@@ -102,12 +102,16 @@ class Patients(Resource):
 
 class Appointments(Resource):
     def get(self, id=None):
+        patient_id = request.args.get('patientId') # Get patientId from query parameters
         if id:
             appointment = Appointment.query.filter_by(id=id).one_or_none()
             if appointment is None:
                 return make_response(jsonify({'error': 'Appointment not found'}), 404)
             else:
                 return make_response(jsonify(appointment.to_dict()), 200)
+        elif patient_id:
+            appointments = Appointment.query.filter_by(patient_id=patient_id).all() # Filter by patient ID
+            return make_response(jsonify([appointment.to_dict() for appointment in appointments]), 200)
         else:
             appointments = Appointment.query.all()
             return make_response(jsonify([appointment.to_dict() for appointment in appointments]), 200)

@@ -37,11 +37,12 @@ const PatientLogin = () => {
       
         if (flag === 1) {
           setLoginMsg('Logged in!');
-          navigate('/patient-home');
-        } else {
-          setErrorMsg('Login unsuccessful');
-        }
+          const loggedInPatient = patients.find(p => p.dob === inputDob && p.firstname === patient.firstname && p.lastname === patient.lastname);
+          navigate('/patient-home', { state: { patientId: loggedInPatient.id } }); // Pass patientId as state
+      } else {
+        setErrorMsg('Login unsuccessful');
       }
+   }
       
     return (
         <div>

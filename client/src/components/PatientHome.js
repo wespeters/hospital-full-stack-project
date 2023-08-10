@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useLocation } from 'react-router-dom';
 
 const PatientHome = () => {
+  const location = useLocation();
+  const patientId = location.state ? location.state.patientId : null;
   const [action, setAction] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -8,7 +11,7 @@ const PatientHome = () => {
   const [changeDate, setChangeDate] = useState(""); // Added state for change date
 
   const fetchAppointments = () => {
-    fetch("/appointments") 
+    fetch(`/appointments?patientId=${patientId}`) 
       .then((resp) => resp.json())
       .then(setAppointments);
   };
