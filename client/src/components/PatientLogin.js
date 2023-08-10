@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import DarkModeToggle from './DarkModeToggle';
 
 const PatientLogin = () => {
     const [patients, setPatients] = useState([]);
@@ -46,6 +47,7 @@ const PatientLogin = () => {
       
     return (
         <div>
+            <DarkModeToggle />
             {errorMsg && <div>{errorMsg}</div>}
             {loginMsg && <div>{loginMsg}</div>}
             <form onSubmit={handleSubmit}>

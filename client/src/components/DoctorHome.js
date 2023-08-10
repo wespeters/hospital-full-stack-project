@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import DarkModeToggle from './DarkModeToggle';
 
 function DoctorHome (){
     const location = useLocation();
@@ -15,6 +16,7 @@ function DoctorHome (){
 
     return (
         <div>
+            <DarkModeToggle />
             <h1>Doctor Home Page</h1>
             <div>
                 <p>View Upcoming Appointments: <button onClick={handleViewClick}>View</button></p>
