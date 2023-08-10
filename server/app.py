@@ -120,6 +120,7 @@ class Appointments(Resource):
         new_appointment = Appointment(**request.json)
         print("New appointment:", new_appointment)
         db.session.add(new_appointment)
+        db.session.flush()
         db.session.commit()
         print("Saved appointment:", new_appointment)
         return make_response(jsonify(new_appointment.to_dict()), 201)

@@ -50,8 +50,9 @@ const PatientHome = () => {
 
   const handleChangeAppointment = (appointmentId) => {
     // Convert the date from 'YYYY-MM-DD' to 'MM/DD/YYYY'
-    const convertedDate = changeDate.split('-').reverse().join('/');
-
+    const [year, month, day] = changeDate.split('-');
+    const convertedDate = `${month}/${day}/${year}`;
+  
     fetch(`/appointments/${appointmentId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -59,7 +60,7 @@ const PatientHome = () => {
     })
       .then(() => fetchAppointments());
   };
-
+  
   const handleCreateAppointment = () => {
     // Convert the date from 'YYYY-MM-DD' to 'MM/DD/YYYY'
     const [year, month, day] = newAppointment.date.split('-');
@@ -68,7 +69,7 @@ const PatientHome = () => {
     fetch("/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...newAppointment, date: convertedDate, time: newAppointment.time }),
+      body: JSON.stringify({ ...newAppointment, date: convertedDate, time: newAppointment.time, patient_id: patientId }),
     })
       .then(() => fetchAppointments());
   };  
@@ -99,14 +100,15 @@ const PatientHome = () => {
         ))}
       </div>}
       {action === "create" && <div>
-        <label>Select Doctor: </label>
-        <select name="doctor_id" onChange={handleNewAppointmentChange}>
-          {doctors.map((doctor) => <option key={doctor.id} value={doctor.id}>{doctor.lastname}</option>)}
-        </select>
-        <input type="date" name="date" onChange={handleNewAppointmentChange} />
-        <input type="time" name="time" onChange={handleNewAppointmentChange} /> {/* Added input for time */}
-        <button onClick={handleCreateAppointment}>Submit</button>
-      </div>}
+  <label>Select Doctor: </label>
+  <select name="doctor_id" onChange={handleNewAppointmentChange} value={newAppointment.doctor_id}>
+    <option value="">Select Doctor</option>
+    {doctors.map((doctor) => <option key={doctor.id} value={doctor.id}>{doctor.lastname}</option>)}
+  </select>
+  <input type="date" name="date" onChange={handleNewAppointmentChange} />
+  <input type="time" name="time" onChange={handleNewAppointmentChange} />
+  <button onClick={handleCreateAppointment}>Submit</button>
+</div>}
     </div>
   );
 };
