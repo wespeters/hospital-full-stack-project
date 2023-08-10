@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import DarkModeToggle from './DarkModeToggle';
 
 function DoctorHome (){
     return (
         <div>
+            <DarkModeToggle />
             <h1>Doctor Home Page</h1>
             <div>
                 <label>View Upcoming Appointments: </label>

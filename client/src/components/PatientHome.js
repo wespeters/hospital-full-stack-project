@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
+import DarkModeToggle from './DarkModeToggle';
 
 const PatientHome = () => {
   const location = useLocation();
@@ -80,6 +81,7 @@ const PatientHome = () => {
 
   return (
     <div>
+      <DarkModeToggle />
       <h1>Patient Home Page</h1>
       <div>
         <p>View Upcoming Appointments: <button onClick={handleView}>View</button></p>
