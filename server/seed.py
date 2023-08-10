@@ -64,15 +64,20 @@ if __name__ == '__main__':
         Appointment.query.delete()
         Login.query.delete()
 
-        # Create fake data
+        # Create fake data for doctors and patients
         doctors = create_doctors(10)
         patients = create_patients(50)
+
+        # Add and commit doctors and patients to the session
+        db.session.add_all(doctors)
+        db.session.add_all(patients)
+        db.session.commit()  # Commit here to assign IDs
+
+        # Create fake data for appointments and logins using the committed doctors and patients
         appointments = create_appointments(doctors, patients)
         logins = create_logins(doctors)
 
-        # Add fake data to the session
-        db.session.add_all(doctors)
-        db.session.add_all(patients)
+        # Add and commit appointments and logins to the session
         db.session.add_all(appointments)
         db.session.add_all(logins)
 
@@ -80,3 +85,4 @@ if __name__ == '__main__':
         db.session.commit()
 
         print("Seeding completed successfully!")
+

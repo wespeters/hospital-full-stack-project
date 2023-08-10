@@ -26,8 +26,6 @@ const PatientLogin = () => {
         const inputDob = `${String(inputDobDate.getUTCMonth() + 1).padStart(2, '0')}/${String(inputDobDate.getUTCDate()).padStart(2, '0')}/${inputDobDate.getUTCFullYear()}`;
       
         for (let i = 0; i < patients.length; i++) {
-          console.log('Comparing:', patients[i].dob, 'with input:', inputDob);
-      
           if (
             patients[i].dob === inputDob &&
             patients[i].firstname === patient.firstname &&
@@ -45,7 +43,6 @@ const PatientLogin = () => {
         }
       }
       
-  
     return (
         <div>
             {errorMsg && <div>{errorMsg}</div>}
