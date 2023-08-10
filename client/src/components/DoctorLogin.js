@@ -5,6 +5,8 @@ import DarkModeToggle from './DarkModeToggle';
 function DoctorLogin (){
     const [user, setUser] = useState({});
     const [logins, setLogins] = useState([]);
+    const [doctors, setDoctors] = useState(null);
+
     const [errorMsg, setErrorMsg] = useState(null);
     const navigate = useNavigate();
 
@@ -12,6 +14,10 @@ function DoctorLogin (){
         fetch('/logins')
             .then(resp => resp.json())
             .then(setLogins)
+
+        fetch('/doctors')
+            .then(resp => resp.json())
+            .then(setDoctors)
     }, [])
 
     function handleChange(e){
@@ -32,7 +38,8 @@ function DoctorLogin (){
 
         if (flag === 1){
             if(loginInfo.user_type === 'Doctor'){
-                navigate('/doctor-home')
+                const doctor = doctors.find(doctor => loginInfo.user.includes(doctor.lastname))
+                navigate('/doctor-home', { state: {doctorID: doctor.id}})
             } else {
                 navigate('/admin-home')
             }
