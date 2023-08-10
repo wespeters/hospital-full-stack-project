@@ -37,8 +37,11 @@ def create_appointments(doctors, patients):
             date = fake.date_between(start_date='-1y', end_date='+1y').strftime('%m/%d/%Y')
             hour = randint(9, 16) # 9 AM to 4 PM
             minute = randint(0, 59)
-            am_pm = 'AM' if hour < 12 else 'PM'
-            time = time_obj(hour=hour % 12 if hour != 12 else 12, minute=minute).strftime('%I:%M ' + am_pm)
+            hour_str = f'{hour:02}'
+            minute_str = f'{minute:02}'
+            time = f'{hour_str}:{minute_str}'
+
+
             appointment = Appointment(date=date, time=time, doctor_id=doctor.id, patient_id=patient.id)
             appointments.append(appointment)
     return appointments
