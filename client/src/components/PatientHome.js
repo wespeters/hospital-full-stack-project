@@ -100,15 +100,15 @@ const PatientHome = () => {
         ))}
       </div>}
       {action === "create" && <div>
-  <label>Select Doctor: </label>
-  <select name="doctor_id" onChange={handleNewAppointmentChange} value={newAppointment.doctor_id}>
-    <option value="">Select Doctor</option>
-    {doctors.map((doctor) => <option key={doctor.id} value={doctor.id}>{doctor.lastname}</option>)}
-  </select>
-  <input type="date" name="date" onChange={handleNewAppointmentChange} />
-  <input type="time" name="time" onChange={handleNewAppointmentChange} />
-  <button onClick={handleCreateAppointment}>Submit</button>
-</div>}
+        <label>Select Doctor: </label>
+        <select name="doctor_id" onChange={handleNewAppointmentChange} value={newAppointment.doctor_id}>
+          <option value="">Select Doctor</option>
+          {doctors.map((doctor) => <option key={doctor.id} value={doctor.id}>{doctor.lastname}</option>)}
+        </select>
+        <input type="date" name="date" onChange={handleNewAppointmentChange} />
+        <input type="time" name="time" onChange={handleNewAppointmentChange} />
+        <button onClick={handleCreateAppointment}>Submit</button>
+      </div>}
     </div>
   );
 };

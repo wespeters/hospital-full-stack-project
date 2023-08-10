@@ -6,26 +6,12 @@ function AdminHome (){
         <div>
             <h1>Admin Home Page</h1>
             <div>
-                <label>View Doctors: </label>
-                <button>View</button>
-                <br/>
-
-                <label>Add Doctor: </label>
-                <button>Create</button>
-                <br />
-
-                <label>Remove Doctor: </label>
-                <button>Cancel</button>
-                <br />
-
-                <label>View Patients: </label>
-                <button>View</button>
-                <br />
-
-                <label>View Appointments: </label>
-                <button>View</button>
+                <p>View Doctors: <button>View</button></p>
+                <p>Add Doctor: <button>Add</button></p>
+                <p>Remove Doctor: <button>Remove</button></p>
+                <p>View Patients: <button>View</button></p>
+                <p>View Appointments: <button>View</button></p>
             </div>
-            <div id='action-container'></div>
         </div>
     )
 }

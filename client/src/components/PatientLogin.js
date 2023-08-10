@@ -42,7 +42,7 @@ const PatientLogin = () => {
       } else {
         setErrorMsg('Login unsuccessful');
       }
-   }
+    }
       
     return (
         <div>
