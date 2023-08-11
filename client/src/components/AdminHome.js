@@ -10,10 +10,28 @@ function AdminHome (){
     const today = new Date().toISOString().split('T')[0];
 
     const [action, setAction] = useState(null);
-    const [newDoctor, setNewDoctor] = useState({});
-    const [newPatient, setNewPatient] = useState({});
-    const [newAppointment, setNewAppointment] = useState({});
-    const [changeAppointment, setChangeAppointment] = useState({});
+    const [newDoctor, setNewDoctor] = useState({
+        lastname: '',
+        username: '',
+        password: ''
+      });      
+      const [newPatient, setNewPatient] = useState({
+        firstname: '',
+        lastname: '',
+        dob: ''
+      });      
+      const [newAppointment, setNewAppointment] = useState({
+        date: '',
+        time: '',
+        patient_firstname: '',
+        patient_lastname: '',
+        patient_dob: '',
+        dr_lastname: ''
+      });      
+      const [changeAppointment, setChangeAppointment] = useState({
+        date: '',
+        time: ''
+      });      
 
     useEffect(() => {
         fetchAppointments();
