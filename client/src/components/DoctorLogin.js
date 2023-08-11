@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
 
 function DoctorLogin (){
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({ username: "", password: "" });
     const [logins, setLogins] = useState([]);
     const [doctors, setDoctors] = useState(null);
 
@@ -73,11 +73,11 @@ function DoctorLogin (){
                     placeholder = "Password"
                     required
                 />
-                <input class="button-29ish" role="button" type = "submit" value = "Login"/>
+                <input className="button-29ish" role="button" type = "submit" value = "Login"/>
             </form>
             <br/>
             <label>Not a Doctor or Admin?</label>
-            <button class="button-29" role="button" onClick={() => navigate('/patient-login')}>Patient</button>
+            <button className="button-29" role="button" onClick={() => navigate('/patient-login')}>Patient</button>
         </div>
     )
 }

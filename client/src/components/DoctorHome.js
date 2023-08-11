@@ -8,7 +8,13 @@ function DoctorHome (){
     const doctorID = location.state ? location.state.doctorID : null;
     const [appointments, setAppointments] = useState([]);
     const [patients, setPatients] = useState([]);
-    const [newAppointment, setNewAppointment] = useState({});
+    const [newAppointment, setNewAppointment] = useState({
+        date: "",
+        time: "",
+        patient_firstname: "",
+        patient_lastname: "",
+        patient_dob: ""
+    });
     const [changeDate, setChangeDate] = useState("");
     const [changeTime, setChangeTime] = useState("");
     const [action, setAction] = useState(null);
@@ -168,7 +174,12 @@ function DoctorHome (){
 
         const convertedTime = `${hour}:${minute}`
 
-        let patient = null;
+        let patient = patients.find(p => p.firstname === newAppointment.patient_firstname && p.lastname === newAppointment.patient_lastname && p.dob === convertedDobDate);
+
+        if (!patient) {
+            setErrorMsg('Patient not found. Please check the details and try again.');
+            return;
+        }
 
         for (let i=0; i < patients.length; i++){
             if ((patients[i].firstname === newAppointment.patient_firstname) && (patients[i].lastname === newAppointment.patient_lastname) && (patients[i].dob === convertedDobDate)){
@@ -229,15 +240,18 @@ function DoctorHome (){
         });
     };
 
-    function fetchAppointments(){
+    function fetchAppointments() {
         fetch('/appointments')
-            .then(resp => resp.json())
-            .then(data => {
-                setAppointments(data.filter(appointment => appointment.doctor.id === doctorID))
-                setAppointments(filterAppointments(appointments))
-            })
-            .catch(setErrorMsg)
-    }
+          .then((resp) => resp.json())
+          .then((data) => {
+            const filteredAppointments = data.filter(
+              (appointment) => appointment.doctor.id === doctorID
+            );
+            setAppointments(filterAppointments(filteredAppointments));
+          })
+          .catch(setErrorMsg);
+      }
+      
 }
 
 export default DoctorHome;
