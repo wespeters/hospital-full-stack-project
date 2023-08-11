@@ -64,6 +64,8 @@ function DoctorHome (){
                     <br />
                     <input className='create-input' type="date" name="patient_dob" value={newAppointment.patient_dob} onChange={handleChange} placeholder="Patient's DOB"/>
                     <br />
+                    <label className="dob-label">Patient's Date of Birth</label>
+                    <br />
                     <button className='task-button' role='button' onClick={handleSubmit}>Submit</button>
                 </div>
             }

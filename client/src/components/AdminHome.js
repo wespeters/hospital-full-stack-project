@@ -119,6 +119,8 @@ function AdminHome (){
                         <br />
                         <input className='create-input' type="date" name="dob" value={newPatient.dob} onChange={handlePatientChange} placeholder="Date of Birth" />
                         <br />
+                        <label className="dob-label">Date of Birth</label>
+                        <br />
                         <button className='task-button' role='button' onClick={handleAddPatient}>Add</button>
                     </div>
             }

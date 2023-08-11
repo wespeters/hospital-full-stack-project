@@ -85,7 +85,7 @@ const PatientLogin = () => {
             />
             <label className="dob-label">Date of Birth</label>
             <br />
-            <input class="button-29" role="button" type="submit" value="Login" />
+            <input className="button-29" role="button" type="submit" value="Login" />
         </form>
     </div>
   );
