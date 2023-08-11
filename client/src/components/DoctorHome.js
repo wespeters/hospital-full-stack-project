@@ -12,6 +12,8 @@ function DoctorHome (){
     const [changeDate, setChangeDate] = useState("");
     const [changeTime, setChangeTime] = useState("");
     const [action, setAction] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
+    const today = new Date().toISOString().split('T')[0];
 
     useEffect(() => {
         fetchAppointments();
@@ -29,6 +31,11 @@ function DoctorHome (){
                 <p>Create an Appointment: <button onClick={handleCreateClick}>Create</button></p>
                 <p>Cancel an Appointment: <button onClick={handleCancelClick}>Cancel</button></p>
             </div>
+            {errorMsg && 
+                <div>
+                    <p>{errorMsg}</p>
+                </div>
+            }
             {action === "view" && 
                 <div>
                     {appointments.map((appointment) => (
@@ -98,7 +105,11 @@ function DoctorHome (){
     function handleCancelAppointment(id){
         fetch(`/appointments/${id}`, { method: "DELETE" })
             .then(resp => resp.json())
-            .then(resp => fetchAppointments())
+            .then(resp => {
+                fetchAppointments();
+                setAction('view')
+            })
+            .catch(setErrorMsg)
     }
 
     function handleChange(e){
@@ -129,8 +140,11 @@ function DoctorHome (){
                 time: convertedTime 
             })
         })
-        
-        fetchAppointments();
+            .then(() => {
+                fetchAppointments();
+                setAction('view');
+            })
+            .catch(setErrorMsg)
     }
 
     function handleSubmit(){
@@ -174,10 +188,12 @@ function DoctorHome (){
                     dob: convertedDobDate,
                 })
             })
+                .catch(setErrorMsg)
 
             fetch('/patients')
                 .then(resp => resp.json())
                 .then(setPatients)
+                .catch(setErrorMsg)
 
             for (let i=0; i < patients.length; i++){
                 if ((patients[i].firstname === newAppointment.patient_firstname) && (patients[i].lastname === newAppointment.patient_lastname) && (patients[i].dob === convertedDobDate)){
@@ -198,14 +214,29 @@ function DoctorHome (){
                 doctor_id: doctorID
             })
         })
-
-        fetchAppointments();
+            .then(() => {
+                fetchAppointments();
+                setAction('view');
+            })
+            .catch(setErrorMsg)
     }
+
+    function filterAppointments(appointments){
+        return appointments.filter(appointment => {
+            const appointmentDate = new Date(appointment.date);
+            const todayDate = new Date(today);
+            return appointmentDate >= todayDate;
+        });
+    };
 
     function fetchAppointments(){
         fetch('/appointments')
             .then(resp => resp.json())
-            .then(data => setAppointments(data.filter(appointment => appointment.doctor.id === doctorID)))
+            .then(data => {
+                setAppointments(data.filter(appointment => appointment.doctor.id === doctorID))
+                setAppointments(filterAppointments(appointments))
+            })
+            .catch(setErrorMsg)
     }
 }
 
