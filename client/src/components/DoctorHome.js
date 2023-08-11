@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
 import { formatTime } from '../helpers.js'
 
@@ -9,8 +9,8 @@ function DoctorHome (){
     const [appointments, setAppointments] = useState([]);
     const [patients, setPatients] = useState([]);
     const [newAppointment, setNewAppointment] = useState({});
-    const [changeDate, setChangeDate] = useState(null);
-    const [changeTime, setChangeTime] = useState(null);
+    const [changeDate, setChangeDate] = useState("");
+    const [changeTime, setChangeTime] = useState("");
     const [action, setAction] = useState(null);
 
     useEffect(() => {
@@ -42,15 +42,14 @@ function DoctorHome (){
                 <div>
                     <label>Create an Appointment:</label>
                     <br />
-                    <input type="text" name="date" value={newAppointment.date} onChange={handleChange} placeholder="Date"/>
-                    <br />
-                    <input type="text" name="time" value={newAppointment.time} onChange={handleChange} placeholder="Time"/>
+                    <input type="date" name="date" value={newAppointment.date} onChange={handleChange} placeholder="Date"/>
+                    <input type="time" name="time" value={newAppointment.time} onChange={handleChange} placeholder="Time"/>
                     <br />
                     <input type="text" name="patient_firstname" value={newAppointment.patient_firstname} onChange={handleChange} placeholder="Patient's Firstname"/>
                     <br />
                     <input type="text" name="patient_lastname" value={newAppointment.patient_lastname} onChange={handleChange} placeholder="Patient's Lastname"/>
                     <br />
-                    <input type="text" name="patient_dob" value={newAppointment.patient_dob} onChange={handleChange} placeholder="Patient's DOB"/>
+                    <input type="date" name="patient_dob" value={newAppointment.patient_dob} onChange={handleChange} placeholder="Patient's DOB"/>
                     <br />
                     <button onClick={handleSubmit}>Submit</button>
                 </div>
@@ -114,7 +113,7 @@ function DoctorHome (){
         let minute = changeTime.substring(3,5)
         let meridiem = changeTime.substring(6)
 
-        if (meridiem === 'PM' && hour != 12){
+        if (meridiem === 'PM' && hour !== 12){
             hour = parseInt(hour) + 12
         }
 
@@ -139,10 +138,26 @@ function DoctorHome (){
             .then(resp => resp.json())
             .then(setPatients)
 
+        const [dobyear, dobmonth, dobday] = newAppointment.patient_dob.split('-');
+        const convertedDobDate = `${dobmonth}/${dobday}/${dobyear}`;
+
+        const [year, month, day] = newAppointment.date.split('-');
+        const convertedDate = `${month}/${day}/${year}`;
+
+        let hour = newAppointment.time.substring(0,2)
+        let minute = newAppointment.time.substring(3,5)
+        let meridiem = newAppointment.time.substring(6)
+
+        if (meridiem === 'PM' && hour !== 12){
+        hour = parseInt(hour) + 12
+        }
+
+        const convertedTime = `${hour}:${minute}`
+
         let patient = null;
 
         for (let i=0; i < patients.length; i++){
-            if ((patients[i].firstname === newAppointment.patient_firstname) && (patients[i].lastname === newAppointment.patient_lastname) && (patients[i].dob === newAppointment.patient_dob)){
+            if ((patients[i].firstname === newAppointment.patient_firstname) && (patients[i].lastname === newAppointment.patient_lastname) && (patients[i].dob === convertedDobDate)){
                 patient = patients[i]
             }
         }
@@ -156,7 +171,7 @@ function DoctorHome (){
                 body: JSON.stringify({
                     firstname: newAppointment.patient_firstname,
                     lastname: newAppointment.patient_lastname,
-                    dob: newAppointment.patient_dob,
+                    dob: convertedDobDate,
                 })
             })
 
@@ -165,7 +180,7 @@ function DoctorHome (){
                 .then(setPatients)
 
             for (let i=0; i < patients.length; i++){
-                if ((patients[i].firstname === newAppointment.patient_firstname) && (patients[i].lastname === newAppointment.patient_lastname) && (patients[i].dob === newAppointment.patient_dob)){
+                if ((patients[i].firstname === newAppointment.patient_firstname) && (patients[i].lastname === newAppointment.patient_lastname) && (patients[i].dob === convertedDobDate)){
                     patient = patients[i]
                 }
             }
@@ -177,8 +192,8 @@ function DoctorHome (){
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                date: newAppointment.date,
-                time: newAppointment.time,
+                date: convertedDate,
+                time: convertedTime,
                 patient_id: patient.id,
                 doctor_id: doctorID
             })
@@ -188,7 +203,7 @@ function DoctorHome (){
     }
 
     function fetchAppointments(){
-        fetch(`/appointments`)
+        fetch('/appointments')
             .then(resp => resp.json())
             .then(data => setAppointments(data.filter(appointment => appointment.doctor.id === doctorID)))
     }

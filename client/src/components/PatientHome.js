@@ -68,7 +68,7 @@ const PatientHome = () => {
     let minute = changeTime.substring(3,5)
     let meridiem = changeTime.substring(6)
 
-    if (meridiem === 'PM' && hour != 12){
+    if (meridiem === 'PM' && hour !== 12){
       hour = parseInt(hour) + 12
     }
 
