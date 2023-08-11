@@ -7,6 +7,7 @@ function AdminHome (){
     const [appointments, setAppointments] = useState(null);
     const [doctors, setDoctors] = useState(null);
     const [patients, setPatients] = useState(null);
+    const today = new Date().toISOString().split('T')[0];
 
     const [action, setAction] = useState(null);
     const [newDoctor, setNewDoctor] = useState({});
@@ -377,6 +378,14 @@ function AdminHome (){
         setNewAppointment({...newAppointment, [e.target.name]: e.target.value})
     }
 
+    function filterAppointments(appointments){
+        return appointments.filter(appointment => {
+            const appointmentDate = new Date(appointment.date);
+            const todayDate = new Date(today);
+            return appointmentDate >= todayDate;
+        });
+    };
+
     function fetchDoctors(){
         fetch('/doctors')
             .then(resp => resp.json())
@@ -392,7 +401,7 @@ function AdminHome (){
     function fetchAppointments(){
         fetch('/appointments')
             .then(resp => resp.json())
-            .then(setAppointments)
+            .then(data => setAppointments(filterAppointments(data)))
     }
 }
 
