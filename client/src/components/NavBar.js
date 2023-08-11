@@ -9,7 +9,7 @@ const NavBar = () => {
         <h1>Hospital Appointments</h1>
       </div>
       <div className="navbar-links">
-        <Link to="/">Doctor Login</Link>
+        <Link to="/">Doctor/Admin Login</Link>
         <Link to="/patient-login">Patient Login</Link>
       </div>
     </div>
