@@ -32,18 +32,18 @@ function AdminHome (){
             <div className="dark-mode-toggle-container">
                 <DarkModeToggle />
             </div>
-            <h1>Admin Home Page</h1>
+            <h2 className='home-title'>Admin Home Page</h2>
             <div>
-                <p>View Doctors: <button onClick={() => setAction('view_doctors')}>View</button></p>
-                <p>Add Doctor: <button onClick={() => setAction('add_doctor')}>Add</button></p>
-                <p>Remove Doctor: <button onClick={() => setAction('remove_doctor')}>Remove</button></p>
-                <p>View Patients: <button onClick={() => setAction('view_patients')}>View</button></p>
-                <p>Add Patient: <button onClick={() => setAction('add_patient')}>Add</button></p>
-                <p>Remove Patient: <button onClick={() => setAction('remove_patient')}>Remove</button></p>
-                <p>View Appointments: <button onClick={() => setAction('view_appointments')}>View</button></p>
-                <p>Create an Appointment: <button onClick={() => setAction('add_appointment')}>Create</button></p>
-                <p>Edit an Appointment: <button onClick={() => setAction('edit_appointment')}>Edit</button></p>
-                <p>Cancel Appointment: <button onClick={() => setAction('remove_appointment')}>Cancel</button></p>
+                <p>View Doctors: <button className='task-button' role='button' onClick={() => setAction('view_doctors')}>View</button></p>
+                <p>Add Doctor: <button className='task-button' role='button' onClick={() => setAction('add_doctor')}>Add</button></p>
+                <p>Remove Doctor: <button className='task-button' role='button' onClick={() => setAction('remove_doctor')}>Remove</button></p>
+                <p>View Patients: <button className='task-button' role='button' onClick={() => setAction('view_patients')}>View</button></p>
+                <p>Add Patient: <button className='task-button' role='button' onClick={() => setAction('add_patient')}>Add</button></p>
+                <p>Remove Patient: <button className='task-button' role='button' onClick={() => setAction('remove_patient')}>Remove</button></p>
+                <p>View Appointments: <button className='task-button' role='button' onClick={() => setAction('view_appointments')}>View</button></p>
+                <p>Create an Appointment: <button className='task-button' role='button' onClick={() => setAction('add_appointment')}>Create</button></p>
+                <p>Edit an Appointment: <button className='task-button' role='button' onClick={() => setAction('edit_appointment')}>Edit</button></p>
+                <p>Cancel Appointment: <button className='task-button' role='button' onClick={() => setAction('remove_appointment')}>Cancel</button></p>
             </div>
             {
                 action === 'view_doctors' && 
@@ -60,13 +60,13 @@ function AdminHome (){
                     <div>
                         <label>Add a Doctor:</label>
                         <br />
-                        <input type="text" name="lastname" value={newDoctor.lastname} onChange={handleDoctorChange} placeholder="Dr's Lastname" />
+                        <input className='create-input' type="text" name="lastname" value={newDoctor.lastname} onChange={handleDoctorChange} placeholder="Dr's Lastname" />
                         <br />
-                        <input type="text" name="username" value={newDoctor.username} onChange={handleDoctorChange} placeholder="Dr's Login Username" />
+                        <input className='create-input' type="text" name="username" value={newDoctor.username} onChange={handleDoctorChange} placeholder="Dr's Login Username" />
                         <br />
-                        <input type="password" name="password" value={newDoctor.password} onChange={handleDoctorChange} placeholder="Dr's Password" />
+                        <input className='create-input' type="password" name="password" value={newDoctor.password} onChange={handleDoctorChange} placeholder="Dr's Password" />
                         <br />
-                        <button onClick={handleAddDoctor}>Add</button>
+                        <button className='task-button' role='button' onClick={handleAddDoctor}>Add</button>
                     </div>
             }
             {
@@ -75,7 +75,7 @@ function AdminHome (){
                         {doctors.map((doctor) => (
                             <p key={doctor.id}>
                                 Dr. {doctor.lastname} 
-                                <button onClick={() => handleRemoveDoctor(doctor.id)}>Remove</button>
+                                <button className='task-buttonish' role='button' onClick={() => handleRemoveDoctor(doctor.id)}>Remove</button>
                             </p>
                         ))}
                     </div>
@@ -95,13 +95,13 @@ function AdminHome (){
                     <div>
                         <label>Add a Patient:</label>
                         <br />
-                        <input type="text" name="firstname" value={newPatient.firstname} onChange={handlePatientChange} placeholder="Firstname" />
+                        <input className='create-input' type="text" name="firstname" value={newPatient.firstname} onChange={handlePatientChange} placeholder="Firstname" />
                         <br />
-                        <input type="text" name="lastname" value={newPatient.lastname} onChange={handlePatientChange} placeholder="Lastname" />
+                        <input className='create-input' type="text" name="lastname" value={newPatient.lastname} onChange={handlePatientChange} placeholder="Lastname" />
                         <br />
-                        <input type="date" name="dob" value={newPatient.dob} onChange={handlePatientChange} placeholder="Date of Birth" />
+                        <input className='create-input' type="date" name="dob" value={newPatient.dob} onChange={handlePatientChange} placeholder="Date of Birth" />
                         <br />
-                        <button onClick={handleAddPatient}>Add</button>
+                        <button className='task-button' role='button' onClick={handleAddPatient}>Add</button>
                     </div>
             }
             {
@@ -110,7 +110,7 @@ function AdminHome (){
                         {patients.map((patient) => (
                             <p key={patient.id}>
                                 {patient.firstname} {patient.lastname} | DOB: {patient.dob}
-                                <button onClick={() => handleRemovePatient(patient.id)}>Remove</button>
+                                <button className='task-buttonish' role='button' onClick={() => handleRemovePatient(patient.id)}>Remove</button>
                             </p>
                         ))}
                     </div>
@@ -129,18 +129,18 @@ function AdminHome (){
                     <div>
                         <label>Create an Appointment:</label>
                         <br />
-                        <input type="date" name="date" value={newAppointment.date} onChange={handleAppChange} placeholder="Date"/>
-                        <input type="time" name="time" value={newAppointment.time} onChange={handleAppChange} placeholder="Time"/>
+                        <input className='create-input' type="date" name="date" value={newAppointment.date} onChange={handleAppChange} placeholder="Date"/>
+                        <input className='create-input' type="time" name="time" value={newAppointment.time} onChange={handleAppChange} placeholder="Time"/>
                         <br />
-                        <input type="text" name="patient_firstname" value={newAppointment.patient_firstname} onChange={handleAppChange} placeholder="Patient's Firstname"/>
+                        <input className='create-input' type="text" name="patient_firstname" value={newAppointment.patient_firstname} onChange={handleAppChange} placeholder="Patient's Firstname"/>
                         <br />
-                        <input type="text" name="patient_lastname" value={newAppointment.patient_lastname} onChange={handleAppChange} placeholder="Patient's Lastname"/>
+                        <input className='create-input' type="text" name="patient_lastname" value={newAppointment.patient_lastname} onChange={handleAppChange} placeholder="Patient's Lastname"/>
                         <br />
-                        <input type="text" name="patient_dob" value={newAppointment.patient_dob} onChange={handleAppChange} placeholder="Patient's DOB"/>
+                        <input className='create-input' type="text" name="patient_dob" value={newAppointment.patient_dob} onChange={handleAppChange} placeholder="Patient's DOB"/>
                         <br />
-                        <input type="text" name="dr_lastname" value={newAppointment.dr_lastname} onChange={handleAppChange} placeholder="Dr's Lastname" />
+                        <input className='create-input' type="text" name="dr_lastname" value={newAppointment.dr_lastname} onChange={handleAppChange} placeholder="Dr's Lastname" />
                         <br />
-                        <button onClick={handleAddAppointment}>Submit</button>
+                        <button className='task-button' role='button' onClick={handleAddAppointment}>Submit</button>
                     </div>
             }
             {action === 'edit_appointment' &&
@@ -150,7 +150,7 @@ function AdminHome (){
                             <p>{appointment.date} {formatTime(appointment.time)} with {appointment.patient.firstname} {appointment.patient.lastname}</p>
                             <input type="date" name="date" value={changeAppointment.date} onChange={e => setChangeAppointment({...changeAppointment, [e.target.name]: e.target.value})} />
                             <input type="time" name="time" value={changeAppointment.time} onChange={e => setChangeAppointment({...changeAppointment, [e.target.name]: e.target.value})} />
-                            <button onClick={() => handleChangeAppointment(appointment.id)}>Change</button>
+                            <button className='task-buttonish' role='button' onClick={() => handleChangeAppointment(appointment.id)}>Change</button>
                         </div>
                     ))}
                 </div>
@@ -161,7 +161,7 @@ function AdminHome (){
                         {appointments.map(appointment => (
                             <p key={appointment.id}>
                                 {appointment.date} {formatTime(appointment.time)} with Dr. {appointment.doctor.lastname} for {appointment.patient.firstname} {appointment.patient.lastname}
-                                <button onClick={() => handleRemoveAppointment(appointment.id)}>Cancel</button>
+                                <button className='task-buttonish' role='button' onClick={() => handleRemoveAppointment(appointment.id)}>Cancel</button>
                             </p>
                         ))}
                     </div>
