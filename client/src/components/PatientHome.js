@@ -104,34 +104,34 @@ const PatientHome = () => {
         <div className="dark-mode-toggle-container">
           <DarkModeToggle />
         </div>
-      <h1>Patient Home Page</h1>
+      <h2 className='home-title'>Patient Home Page</h2>
       <div>
-        <p>View All Appointments: <button onClick={handleView}>View</button></p>
-        <p>Cancel an Appointment: <button onClick={handleCancel}>Cancel</button></p>
-        <p>Change an Appointment: <button onClick={handleChange}>Change</button></p>
-        <p>Make An Appointment: <button onClick={handleCreate}>Create</button></p>
+        <p>View All Appointments: <button className='task-button' role='button' onClick={handleView}>View</button></p>
+        <p>Cancel an Appointment: <button className='task-button' role='button' onClick={handleCancel}>Cancel</button></p>
+        <p>Change an Appointment: <button className='task-button' role='button' onClick={handleChange}>Change</button></p>
+        <p>Make An Appointment: <button className='task-button' role='button' onClick={handleCreate}>Create</button></p>
       </div>
       {action === "view" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} {formatTime(appointment.time)} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>)}</div>}
-      {action === "cancel" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} {formatTime(appointment.time)} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"} <button onClick={() => handleCancelAppointment(appointment.id)}>Cancel</button></p>)}</div>}
+      {action === "cancel" && <div>{appointments.map((appointment) => <p key={appointment.id}>{appointment.date} {formatTime(appointment.time)} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"} <button className='task-buttonish' role='button' onClick={() => handleCancelAppointment(appointment.id)}>Cancel</button></p>)}</div>}
       {action === "change" && <div>
         {appointments.map((appointment) => (
           <div key={appointment.id}>
             <p>{appointment.date} {formatTime(appointment.time)} with Dr. {appointment.doctor ? appointment.doctor.lastname : "Unknown"}</p>
             <input type="date" value={changeDate} onChange={(e) => setChangeDate(e.target.value)} />
             <input type="time" value={changeTime} onChange={(e) => setChangeTime(e.target.value)} />
-            <button onClick={() => handleChangeAppointment(appointment.id)}>Change</button>
+            <button className='task-buttonish' role='button' onClick={() => handleChangeAppointment(appointment.id)}>Change</button>
           </div>
         ))}
       </div>}
       {action === "create" && <div>
   <label>Select Doctor: </label>
-  <select name="doctor_id" onChange={handleNewAppointmentChange} value={newAppointment.doctor_id}>
+  <select className='create-input' name="doctor_id" onChange={handleNewAppointmentChange} value={newAppointment.doctor_id}>
     <option value="">Select Doctor</option>
     {doctors.map((doctor) => <option key={doctor.id} value={doctor.id}>{doctor.lastname}</option>)}
   </select>
-  <input type="date" name="date" onChange={handleNewAppointmentChange} min={today} />
-  <input type="time" name="time" onChange={handleNewAppointmentChange} />
-  <button onClick={handleCreateAppointment}>Submit</button>
+  <input className='create-input' type="date" name="date" onChange={handleNewAppointmentChange} min={today} />
+  <input className='create-input' type="time" name="time" onChange={handleNewAppointmentChange} />
+  <button className='task-button' role='button' onClick={handleCreateAppointment}>Submit</button>
 </div>}
     </div>
   );

@@ -56,6 +56,7 @@ function DoctorLogin (){
             {errorMsg && <div>{errorMsg}</div>}
             <form onSubmit={handleSubmit}>
                 <input
+                    className = "main-login-input"
                     type = "text"
                     name = "username"
                     value={user.username}
@@ -64,6 +65,7 @@ function DoctorLogin (){
                     required
                 />
                 <input
+                    className = "main-login-input"
                     type = "password"
                     name = "password"
                     value = {user.password}
@@ -71,11 +73,11 @@ function DoctorLogin (){
                     placeholder = "Password"
                     required
                 />
-                <input type = "submit" value = "Login"/>
+                <input class="button-29ish" role="button" type = "submit" value = "Login"/>
             </form>
             <br/>
             <label>Not a Doctor or Admin?</label>
-            <button id="patient-login" onClick={() => navigate('/patient-login')}>Patient</button>
+            <button class="button-29" role="button" onClick={() => navigate('/patient-login')}>Patient</button>
         </div>
     )
 }

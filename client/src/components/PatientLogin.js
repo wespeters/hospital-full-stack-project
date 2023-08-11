@@ -54,6 +54,7 @@ const PatientLogin = () => {
         {loginMsg && <div>{loginMsg}</div>}
         <form onSubmit={handleSubmit}>
             <input
+                className='patient-login-input'
                 type="text"
                 name="firstname"
                 value={patient.firstname}
@@ -63,6 +64,7 @@ const PatientLogin = () => {
             />
             <br />
             <input
+                className='patient-login-input'
                 type="text"
                 name="lastname"
                 value={patient.lastname}
@@ -72,6 +74,7 @@ const PatientLogin = () => {
             />
             <br />
             <input
+                className='patient-login-input'
                 type="date"
                 name="dob"
                 value={patient.dob}
@@ -82,7 +85,7 @@ const PatientLogin = () => {
             />
             <label className="dob-label">Date of Birth</label>
             <br />
-            <input type="submit" value="Login" />
+            <input class="button-29" role="button" type="submit" value="Login" />
         </form>
     </div>
   );

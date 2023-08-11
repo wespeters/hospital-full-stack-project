@@ -23,13 +23,13 @@ function DoctorHome (){
         <div className="container">
         <div className="dark-mode-toggle-container">
             <DarkModeToggle />
-        </div>x
-            <h1>Doctor Home Page</h1>
+        </div>
+            <h2 className='home-title'>Doctor Home Page</h2>
             <div>
-                <p>View Upcoming Appointments: <button onClick={handleViewClick}>View</button></p>
-                <p>Edit an Existing Appointment: <button onClick={handleEditClick}>Edit</button></p>
-                <p>Create an Appointment: <button onClick={handleCreateClick}>Create</button></p>
-                <p>Cancel an Appointment: <button onClick={handleCancelClick}>Cancel</button></p>
+                <p>View Upcoming Appointments: <button className='task-button' role='button' onClick={handleViewClick}>View</button></p>
+                <p>Edit an Existing Appointment: <button className='task-button' role='button' onClick={handleEditClick}>Edit</button></p>
+                <p>Create an Appointment: <button className='task-button' role='button' onClick={handleCreateClick}>Create</button></p>
+                <p>Cancel an Appointment: <button className='task-button' role='button' onClick={handleCancelClick}>Cancel</button></p>
             </div>
             {errorMsg && 
                 <div>
@@ -49,16 +49,16 @@ function DoctorHome (){
                 <div>
                     <label>Create an Appointment:</label>
                     <br />
-                    <input type="date" name="date" value={newAppointment.date} onChange={handleChange} placeholder="Date"/>
-                    <input type="time" name="time" value={newAppointment.time} onChange={handleChange} placeholder="Time"/>
+                    <input className='create-input' type="date" name="date" value={newAppointment.date} onChange={handleChange} placeholder="Date"/>
+                    <input className='create-input' type="time" name="time" value={newAppointment.time} onChange={handleChange} placeholder="Time"/>
                     <br />
-                    <input type="text" name="patient_firstname" value={newAppointment.patient_firstname} onChange={handleChange} placeholder="Patient's Firstname"/>
+                    <input className='create-input' type="text" name="patient_firstname" value={newAppointment.patient_firstname} onChange={handleChange} placeholder="Patient's Firstname"/>
                     <br />
-                    <input type="text" name="patient_lastname" value={newAppointment.patient_lastname} onChange={handleChange} placeholder="Patient's Lastname"/>
+                    <input className='create-input' type="text" name="patient_lastname" value={newAppointment.patient_lastname} onChange={handleChange} placeholder="Patient's Lastname"/>
                     <br />
-                    <input type="date" name="patient_dob" value={newAppointment.patient_dob} onChange={handleChange} placeholder="Patient's DOB"/>
+                    <input className='create-input' type="date" name="patient_dob" value={newAppointment.patient_dob} onChange={handleChange} placeholder="Patient's DOB"/>
                     <br />
-                    <button onClick={handleSubmit}>Submit</button>
+                    <button className='task-button' role='button' onClick={handleSubmit}>Submit</button>
                 </div>
             }
             {action === "edit" &&
@@ -68,7 +68,7 @@ function DoctorHome (){
                             <p>{appointment.date} {formatTime(appointment.time)} with {appointment.patient.firstname} {appointment.patient.lastname}</p>
                             <input type="date" value={changeDate} onChange={e => setChangeDate(e.target.value)} />
                             <input type="time" value={changeTime} onChange={e => setChangeTime(e.target.value)} />
-                            <button onClick={() => handleChangeAppointment(appointment.id)}>Change</button>
+                            <button className='task-buttonish' role='button' onClick={() => handleChangeAppointment(appointment.id)}>Change</button>
                         </div>
                     ))}
                 </div>
@@ -78,7 +78,7 @@ function DoctorHome (){
                     {appointments.map(appointment => (
                         <p key={appointment.id}>
                             {appointment.date} {formatTime(appointment.time)} with {appointment.patient.firstname} {appointment.patient.lastname}
-                            <button onClick={() => handleCancelAppointment(appointment.id)}>Cancel</button>
+                            <button className='task-buttonish' role='button' onClick={() => handleCancelAppointment(appointment.id)}>Cancel</button>
                         </p>
                     ))}
                 </div>
