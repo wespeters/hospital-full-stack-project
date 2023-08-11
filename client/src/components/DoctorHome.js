@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
+import { formatTime } from '../helpers.js'
 
 function DoctorHome (){
     const location = useLocation();
@@ -8,6 +9,8 @@ function DoctorHome (){
     const [appointments, setAppointments] = useState([]);
     const [patients, setPatients] = useState([]);
     const [newAppointment, setNewAppointment] = useState({});
+    const [changeDate, setChangeDate] = useState(null);
+    const [changeTime, setChangeTime] = useState(null);
     const [action, setAction] = useState(null);
 
     useEffect(() => {
@@ -17,11 +20,12 @@ function DoctorHome (){
     return (
         <div className="container">
         <div className="dark-mode-toggle-container">
-          <DarkModeToggle />
-        </div>
+            <DarkModeToggle />
+        </div>x
             <h1>Doctor Home Page</h1>
             <div>
                 <p>View Upcoming Appointments: <button onClick={handleViewClick}>View</button></p>
+                <p>Edit an Existing Appointment: <button onClick={handleEditClick}>Edit</button></p>
                 <p>Create an Appointment: <button onClick={handleCreateClick}>Create</button></p>
                 <p>Cancel an Appointment: <button onClick={handleCancelClick}>Cancel</button></p>
             </div>
@@ -29,7 +33,7 @@ function DoctorHome (){
                 <div>
                     {appointments.map((appointment) => (
                         <p key={appointment.id}>
-                            {appointment.date} {appointment.time} with {appointment.patient.firstname} {appointment.patient.lastname}
+                            {appointment.date} {formatTime(appointment.time)} with {appointment.patient.firstname} {appointment.patient.lastname}
                         </p>
                     ))}
                 </div>
@@ -51,11 +55,23 @@ function DoctorHome (){
                     <button onClick={handleSubmit}>Submit</button>
                 </div>
             }
+            {action === "edit" &&
+                <div>
+                    {appointments.map(appointment => (
+                        <div key={appointment.id}>
+                            <p>{appointment.date} {formatTime(appointment.time)} with {appointment.patient.firstname} {appointment.patient.lastname}</p>
+                            <input type="date" value={changeDate} onChange={e => setChangeDate(e.target.value)} />
+                            <input type="time" value={changeTime} onChange={e => setChangeTime(e.target.value)} />
+                            <button onClick={() => handleChangeAppointment(appointment.id)}>Change</button>
+                        </div>
+                    ))}
+                </div>
+            }
             {action === "cancel" &&
                 <div>
                     {appointments.map(appointment => (
                         <p key={appointment.id}>
-                            {appointment.date} {appointment.time} with {appointment.patient.firstname} {appointment.patient.lastname}
+                            {appointment.date} {formatTime(appointment.time)} with {appointment.patient.firstname} {appointment.patient.lastname}
                             <button onClick={() => handleCancelAppointment(appointment.id)}>Cancel</button>
                         </p>
                     ))}
@@ -72,6 +88,10 @@ function DoctorHome (){
         setAction('create')
     }
 
+    function handleEditClick(){
+        setAction('edit')
+    }
+
     function handleCancelClick(){
         setAction('cancel')
     }
@@ -84,6 +104,34 @@ function DoctorHome (){
 
     function handleChange(e){
         setNewAppointment({...newAppointment, [e.target.name]: e.target.value})
+    }
+
+    function handleChangeAppointment(id){
+        const [year, month, day] = changeDate.split('-');
+        const convertedDate = `${month}/${day}/${year}`;
+
+        let hour = changeTime.substring(0,2)
+        let minute = changeTime.substring(3,5)
+        let meridiem = changeTime.substring(6)
+
+        if (meridiem === 'PM' && hour != 12){
+            hour = parseInt(hour) + 12
+        }
+
+        const convertedTime = `${hour}:${minute}`
+
+        fetch(`/appointments/${id}`, {
+            method: "PATCH",
+            headers: { 
+                "Content-Type": "application/json" 
+            },
+            body: JSON.stringify({ 
+                date: convertedDate, 
+                time: convertedTime 
+            })
+        })
+        
+        fetchAppointments();
     }
 
     function handleSubmit(){

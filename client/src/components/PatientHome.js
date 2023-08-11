@@ -63,11 +63,21 @@ const PatientHome = () => {
     // Convert the date from 'YYYY-MM-DD' to 'MM/DD/YYYY'
     const [year, month, day] = changeDate.split('-');
     const convertedDate = `${month}/${day}/${year}`;
+
+    let hour = changeTime.substring(0,2)
+    let minute = changeTime.substring(3,5)
+    let meridiem = changeTime.substring(6)
+
+    if (meridiem === 'PM' && hour != 12){
+      hour = parseInt(hour) + 12
+    }
+
+    const convertedTime = `${hour}:${minute}`
   
     fetch(`/appointments/${appointmentId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ date: convertedDate, time: changeTime }),
+      body: JSON.stringify({ date: convertedDate, time: convertedTime }),
     })
       .then(() => fetchAppointments());
   };
