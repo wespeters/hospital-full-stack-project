@@ -49,8 +49,10 @@ function DoctorLogin (){
     }
 
     return (
-        <div>
-            <DarkModeToggle />
+        <div className="container">
+            <div className="dark-mode-toggle-container">
+                <DarkModeToggle />
+            </div>
             {errorMsg && <div>{errorMsg}</div>}
             <form onSubmit={handleSubmit}>
                 <input

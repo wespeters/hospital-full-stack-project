@@ -90,8 +90,10 @@ const PatientHome = () => {
   };
 
   return (
-    <div>
-      <DarkModeToggle />
+    <div className="container">
+        <div className="dark-mode-toggle-container">
+          <DarkModeToggle />
+        </div>
       <h1>Patient Home Page</h1>
       <div>
         <p>View All Appointments: <button onClick={handleView}>View</button></p>

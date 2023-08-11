@@ -15,8 +15,10 @@ function DoctorHome (){
     },[])
 
     return (
-        <div>
-            <DarkModeToggle />
+        <div className="container">
+        <div className="dark-mode-toggle-container">
+          <DarkModeToggle />
+        </div>
             <h1>Doctor Home Page</h1>
             <div>
                 <p>View Upcoming Appointments: <button onClick={handleViewClick}>View</button></p>

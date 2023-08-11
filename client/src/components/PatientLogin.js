@@ -46,40 +46,47 @@ const PatientLogin = () => {
     }
       
     return (
-        <div>
-            <DarkModeToggle />
-            {errorMsg && <div>{errorMsg}</div>}
-            {loginMsg && <div>{loginMsg}</div>}
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="firstname"
-                    value={patient.firstname}
-                    onChange={onChange}
-                    placeholder="First name"
-                    required
-                />
-                <input
-                    type="text"
-                    name="lastname"
-                    value={patient.lastname}
-                    onChange={onChange}
-                    placeholder="Last name"
-                    required
-                />
-                <input
-                    type="date"
-                    name="dob"
-                    value={patient.dob}
-                    onChange={onChange}
-                    placeholder="Date of Birth"
-                    required
-                />
-                <input type="submit" value="Login" />
-            </form>
+      <div className="container">
+        <div className="dark-mode-toggle-container">
+          <DarkModeToggle />
         </div>
-    );
-  };
+        {errorMsg && <div>{errorMsg}</div>}
+        {loginMsg && <div>{loginMsg}</div>}
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                name="firstname"
+                value={patient.firstname}
+                onChange={onChange}
+                placeholder="First name"
+                required
+            />
+            <br />
+            <input
+                type="text"
+                name="lastname"
+                value={patient.lastname}
+                onChange={onChange}
+                placeholder="Last name"
+                required
+            />
+            <br />
+            <input
+                type="date"
+                name="dob"
+                value={patient.dob}
+                onChange={onChange}
+                placeholder="Date of Birth"
+                title="Date of Birth"
+                required
+            />
+            <label className="dob-label">Date of Birth</label>
+            <br />
+            <input type="submit" value="Login" />
+        </form>
+    </div>
+  );
+};
   
   export default PatientLogin;
   
